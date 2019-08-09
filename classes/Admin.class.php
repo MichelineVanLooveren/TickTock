@@ -1,3 +1,5 @@
-nieuwe admin aanmaken 
-admin verwijderen
-visueel werkdruk per week zien 
+<?php
+
+// nieuwe admin aanmaken
+// admin verwijderen
+// visueel werkdruk per week zien
