@@ -1,5 +1,5 @@
 <?php
-//foutboodschappen via try catch
+//foutboodschappen via try catch nog toevoegen
 require_once 'bootstrap.php';
 
 if (!empty($_POST)) {
