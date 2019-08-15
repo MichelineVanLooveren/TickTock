@@ -17,14 +17,14 @@
 
 
     <section>
-        <a href="lijstTo.php">Lijst toevoegen</a>
+        <a class="toevoegen" href="lijstTo.php">Lijst toevoegen</a>
         <h2>Overzicht lijsten</h2>
         <!--  data lijst db -->
         <ul>
             <?php foreach ($lijsten as $lijst):?> 
                 <li>
-                <a href="lijst.php?id=<?php echo $lijst['id']; ?>"><?php echo $lijst['title']; ?></a>
-                <a class="confirmation" href="index.php?id=<?php echo $lijst['id']; ?>&amp;action=delete_lijst">X</a>
+                  <a href="lijst.php?id=<?php echo $lijst['id']; ?>"><?php echo $lijst['title']; ?></a>
+                  <a class="confirmation" href="index.php?id=<?php echo $lijst['id']; ?>&amp;action=delete_lijst">X</a>
                 </li>
             <?php endforeach; ?>
         </ul>
