@@ -12,10 +12,10 @@
         $lijstId = $lijst->selectById($_GET['id']);
         //toggle
         //bron: https://stackoverflow.com/questions/39478480/verifying-if-checkbox-is-checked-in-php
-        if (isset($_POST['><'])) {
-            $taken = $taak->selectAllAsc($_GET['id']);
-        } else {
+        if (isset($_POST['toggle'])) {
             $taken = $taak->selectAllDesc($_GET['id']);
+        } else {
+            $taken = $taak->selectAllAsc($_GET['id']);
         }
     }
 
@@ -34,8 +34,8 @@
 <a class="toevoegen" href="taakTo.php?id=<?php echo $lijstId['id']; ?>">Taak toevoegen</a> <!-- lijstid meegeven zodat op andere pagina ook bekend is en eruit kan gehaald worden -->
 <a class="toevoegen" href="index.php"><--Terug</a>
 <form method="POST">
-    <input type="radio" name="toggle" checked>>< <!-- van meest naar minst -->
-    <input type="radio" name="toggle" ><> <!-- van minst naar meest -->
+    <input type="radio" name="toggle" checked>meeste-minste werkuren <!-- van meest naar minst -->
+    <input type="radio" name="toggle" >minste-meeste werkuren <!-- van minst naar meest -->
     <input type="submit" value="Pas filter toe">
 </form>
 <h2><?php echo $lijstId['title']; ?></h2>
