@@ -31,7 +31,8 @@
         ?>
 
 <section>
-<a href="taakTo.php?id=<?php echo $lijstId['id']; ?>">Taak toevoegen</a> <!-- lijstid meegeven zodat op andere pagina ook bekend is en eruit kan gehaald worden -->
+<a class="toevoegen" href="taakTo.php?id=<?php echo $lijstId['id']; ?>">Taak toevoegen</a> <!-- lijstid meegeven zodat op andere pagina ook bekend is en eruit kan gehaald worden -->
+<a class="toevoegen" href="index.php"><--Terug</a>
 <form method="POST">
     <input type="radio" name="toggle" checked>>< <!-- van meest naar minst -->
     <input type="radio" name="toggle" ><> <!-- van minst naar meest -->
@@ -41,7 +42,8 @@
 <ul>
     <!-- taken uitlezen en resterende dagen berekenen -->
     <?php foreach ($taken as $taak): ?>
-        <li><a href="taakBw.php?id=<?php echo $taak['id']; ?>"><?php echo $taak['titel'].'</a>';
+        <li><a href="taakBw.php?id=<?php echo $taak['id']; ?>"><?php echo $taak['titel'];
+        echo ' ('.$taak['werkuren'].' werkuren) '.'</a>';
         //bron: https://stackoverflow.com/questions/24608529/date-diff-expects-parameter-1-to-be-datetimeinterface-string-given/24608588
         $eindDatum = $taak['datum'];
         if ($date < $eindDatum) {
