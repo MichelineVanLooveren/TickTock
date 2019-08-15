@@ -17,7 +17,7 @@
 
             $insertTaak = $taak->insert($data);
             if ($insertTaak) {
-                header('Location: index.php'); //!!! beter redirecten naar lijst waaraan taak werd toegevoegd !!!
+                header('Location: lijst.php?id='.$_GET['id']); //!redirecten naar lijst waaraan taak werd toegevoegd
                 exit();
             }
             if (!$insertTaak) {
@@ -31,7 +31,7 @@
 
 <section>
     <h2>Taak toevoegen</h2>
-    <form action="taakTo.php?id=<?php echo $_GET['id']; ?>" method="post"> <!-- id van lijst meegeven --> 
+    <form action="taakTo.php?id=<?php echo $_GET['id']; ?>" method="post"> <!-- id van lijst meegeven zodat in kolom lijstId opgeslagen kan worden in tabel taken --> 
         <?php
             if (!empty($errors['titel'])) {
                 echo '<span class="error">'.$errors['titel'].'</span>';
