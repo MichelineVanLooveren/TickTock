@@ -1,9 +1,9 @@
 <?php
-    $title = 'Detailpagina lijst';
-    $date = date('Y-m-d'); //variabele geeft datum van vandaag weer
+    $title = 'Detailpagina lijst'; // titel van deze pagina
+    $date = date('Y-m-d'); // variabele geeft datum van vandaag weer
     include 'includes/header.inc.php';
-    require_once __DIR__.'/classes/Lijst.class.php';
-    require_once __DIR__.'/classes/Taak.class.php';
+    require_once __DIR__.'/classes/Lijst.class.php'; // klasse lijst oproepen
+    require_once __DIR__.'/classes/Taak.class.php'; // klasse taak oproepen
     $lijst = new Lijst();
     $taak = new Taak();
 
@@ -13,7 +13,14 @@
         //toggle
         //bron: https://stackoverflow.com/questions/39478480/verifying-if-checkbox-is-checked-in-php
         if (isset($_POST['toggle'])) {
-            $taken = $taak->selectAllDesc($_GET['id']);
+            if ($_POST['toggle'] == 'asc') {
+                $taken = $taak->selectAllWuAsc($_GET['id']);
+            }
+        }
+        if (isset($_POST['toggle'])) {
+            if ($_POST['toggle'] == 'desc') {
+                $taken = $taak->selectAllWuDesc($_GET['id']);
+            }
         } else {
             $taken = $taak->selectAllAsc($_GET['id']);
         }
@@ -34,8 +41,9 @@
 <a class="toevoegen" href="taakTo.php?id=<?php echo $lijstId['id']; ?>">Taak toevoegen</a> <!-- lijstid meegeven zodat op andere pagina ook bekend is en eruit kan gehaald worden -->
 <a class="toevoegen" href="index.php"><--Terug</a>
 <form method="POST">
-    <input type="radio" name="toggle" checked>meeste-minste werkuren <!-- van meest naar minst -->
-    <input type="radio" name="toggle" >minste-meeste werkuren <!-- van minst naar meest -->
+    <label>Filter o.b.v. werkuren:</label>
+    <input type="checkbox" name="toggle" value="desc">meest-minst <!-- van meest naar minst -->
+    <input type="checkbox" name="toggle" value="asc">minst-meest <!-- van minst naar meest -->
     <input type="submit" value="Pas filter toe">
 </form>
 <h2><?php echo $lijstId['title']; ?></h2>
@@ -43,7 +51,7 @@
     <!-- taken uitlezen en resterende dagen berekenen -->
     <?php foreach ($taken as $taak): ?>
         <li><a href="taakBw.php?id=<?php echo $taak['id']; ?>"><?php echo $taak['titel'];
-        echo ' ('.$taak['werkuren'].' werkuren) '.'</a>';
+        echo ' ('.$taak['werkuren'].'u werk) '.'</a>';
         //bron: https://stackoverflow.com/questions/24608529/date-diff-expects-parameter-1-to-be-datetimeinterface-string-given/24608588
         $eindDatum = $taak['datum'];
         if ($date < $eindDatum) {
