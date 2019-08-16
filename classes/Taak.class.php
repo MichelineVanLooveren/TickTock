@@ -4,7 +4,7 @@ require_once __DIR__.'/Db.class.php';
 
  class Taak extends DAO
  {
-     //selecteert alles en ordent van klein naar groot --> toggle
+     // selecteert alles en ordent van klein naar groot --> toggle
      public function selectAllAsc($lijstId)
      {
          $sql = 'SELECT * FROM `taken` WHERE `lijstId` = :lijstId ORDER BY `datum`, `werkuren`';
@@ -15,10 +15,21 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }
 
-     //toggle groot naar klein
-     public function selectAllDesc($lijstId)
+     // selecteert werkuren en ordent van meest naar minst --> toggle
+     public function selectAllWuAsc($lijstId)
      {
-         $sql = 'SELECT * FROM `taken` WHERE `lijstId` = :lijstId ORDER BY `datum`, `werkuren` DESC';
+         $sql = 'SELECT * FROM `taken` WHERE `lijstId` = :lijstId ORDER BY `werkuren`';
+         $stmt = $this->pdo->prepare($sql);
+         $stmt->bindValue(':lijstId', $lijstId);
+         $stmt->execute();
+
+         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+     }
+
+     // selecteert werkuren en ordent van minst naar meest --> toggle
+     public function selectAllWuDesc($lijstId)
+     {
+         $sql = 'SELECT * FROM `taken` WHERE `lijstId` = :lijstId ORDER BY `werkuren` DESC';
          $stmt = $this->pdo->prepare($sql);
          $stmt->bindValue(':lijstId', $lijstId);
          $stmt->execute();
