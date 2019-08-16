@@ -5,19 +5,23 @@
 
     if (!empty($_POST['action'])) {
         if ($_POST['action'] == 'insertTaak') {
+            $datum = $_POST['datum'];
+            if (empty($_POST['datum'])) { // deadline aan taak toevoegen is optioneel
+                $datum = null;
+            }
             $data = array(
                 'titel' => $_POST['titel'],
                 'werkuren' => $_POST['werkuren'],
-                'datum' => $_POST['datum'],
+                'datum' => $datum,
                 'gedaan' => '0',
                 'file' => '/',
-                'lijstId' => $_GET['id'], //neem id uit de url
+                'lijstId' => $_GET['id'], // neemt id uit de url
             );
-            // poging tot insert, indien niet gelukt de fouten ophalen uit de DAO class
 
+            // poging tot insert, indien niet gelukt de fouten ophalen uit de DAO class
             $insertTaak = $taak->insert($data);
             if ($insertTaak) {
-                header('Location: lijst.php?id='.$_GET['id']); //!redirecten naar lijst waaraan taak werd toegevoegd
+                header('Location: lijst.php?id='.$_GET['id']); // redirecten naar lijst waaraan taak werd toegevoegd
                 exit();
             }
             if (!$insertTaak) {
