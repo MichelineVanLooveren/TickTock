@@ -4,7 +4,7 @@ require_once __DIR__.'/Db.class.php';
 
  class Taak extends DAO
  {
-     // selecteert alles en ordent van klein naar groot --> toggle
+     // taken tonen volgens deadline (meest dringende deadline bovenaan in de lijst)
      public function selectAllAsc($lijstId)
      {
          $sql = 'SELECT * FROM `taken` WHERE `lijstId` = :lijstId ORDER BY `datum`, `werkuren`';
@@ -37,7 +37,17 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }
 
-     //id voor insert en update
+     // delete lijsten
+     public function delete($lijstId)
+     {
+         $sql = 'DELETE FROM `taken` WHERE `lijstId` = :lijstId';
+         $stmt = $this->pdo->prepare($sql);
+         $stmt->bindValue(':lijstId', $lijstId);
+
+         return $stmt->execute();
+     }
+
+     // id voor insert en update
      public function selectById($id)
      {
          $sql = 'SELECT * FROM `taken` WHERE `id` = :id';
@@ -48,7 +58,7 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->fetch(PDO::FETCH_ASSOC);
      }
 
-     //taak toevoegen
+     // taak toevoegen
      public function insert($data)
      {
          $errors = $this->validate($data);
@@ -70,7 +80,7 @@ require_once __DIR__.'/Db.class.php';
          return false;
      }
 
-     //taak aanpassen
+     // taak aanpassen
      public function update($data)
      {
          $errors = $this->validate($data);
@@ -93,7 +103,7 @@ require_once __DIR__.'/Db.class.php';
          return false;
      }
 
-     //controle bij insert en update
+     // controle bij insert en update
      public function validate($data)
      {
          $errors = [];
