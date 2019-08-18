@@ -1,45 +1,70 @@
 <?php
-    $title = 'Home';
-    require_once __DIR__.'/classes/Lijst.class.php';
+    $title = 'Login'; // titel van de pagina
+    $currentPage = 'login'; // gebruikt in check sessie
 
-    $lijst = new Lijst();
+    require_once __DIR__.'/classes/User.class.php'; // klasse user oproepen
+    $login = new User();
 
-    if (!empty($_GET['id']) && !empty($_GET['action'])) {
-        if ($_GET['action'] == 'delete_lijst') {
-            $lijst->delete($_GET['id']);
+    session_start();
+
+    //login gedeelte
+    if (!empty($_POST)) {
+        if (isset($_POST['action']) == 'login') {
+            if (empty($_POST['username']) || empty($_POST['paswoord'])) {
+                $error = 'E-mailadres of wachtwoord is niet ingevuld';
+            } else {
+                $user = $login->selectLogin($_POST['username']);
+
+                if (!empty($user)) {
+                    if (password_verify($_POST['paswoord'], $user['paswoord'])) {
+                        $data = array(
+                'title' => $_POST['username'],
+                'isAdmin' => $user['isAdmin'],
+              );
+                        $_SESSION['User'] = $data;
+                        header('location:home.php');
+                        exit();
+                    } else {
+                        $error = 'Het opgegeven wachtwoord is niet correct';
+                    }
+                } else {
+                    $error = 'E-mailadres of wachtwoord is niet correct';
+                    exit();
+                }
+            }
+        } else {
+            echo 'Error';
         }
     }
-
-    $lijsten = $lijst->selectAll();
-
-    include 'includes/header.inc.php';
 ?>
-
-
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title><?php echo $title; ?></title> <!-- titel per pagina laten veranderen -->
+</head>
+  <body>  
     <section>
-        <a href="lijstTo.php">Lijst toevoegen</a>
-        <h2>Overzicht lijsten</h2>
-        <!--  data lijst db -->
-        <ul>
-            <?php foreach ($lijsten as $lijst):?> 
-                <li>
-                <a href="lijst.php?id=<?php echo $lijst['id']; ?>"><?php echo $lijst['title']; ?></a>
-                <a class="confirmation" href="index.php?id=<?php echo $lijst['id']; ?>&amp;action=delete_lijst">X</a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+      <h1>Login</h1>
+      <?php if (!empty($error)): ?> 
+        <div class="error"><?php echo $error; ?></div>
+      <?php endif; ?>
+      <form action="index.php" method="post">
+        <input type="hidden" name="action" value="login">
+        
+        <label for="username">Email</label>
+        <input type="text" name="username" id="username">
+
+        <label for="paswoord">Paswoord</label>
+        <input type="password" name="paswoord" id="paswoord">
+
+        <input type="submit" value="login">
+      </form>
+      <a href="registratie.php">registreer hier</a>
     </section>
-    <script type="text/javascript">
-    {
-      const init = () => {
-        const confirmationLinks = Array.from(document.getElementsByClassName(`confirmation`));
-        confirmationLinks.forEach($confirmationLink => {
-          $confirmationLink.addEventListener(`click`, e => {
-            if (!confirm('Ben je zeker dat je deze lijst wilt verwijderen?')) e.preventDefault();
-          });
-        });
-      };
-      init();
-    }
-    </script>
-<?php include 'includes/footer.inc.php'; ?>
+  </body>
+</html>
