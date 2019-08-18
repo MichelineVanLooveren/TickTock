@@ -2,9 +2,9 @@
 
 require_once __DIR__.'/Db.class.php';
 
- class Lijst extends DAO
+ class Lijst extends DAO // klasse Db overerven
  {
-     //functie om lijsten uit db te halen
+     // functie om lijsten uit db te halen
      public function selectAll()
      {
          $sql = 'SELECT * FROM `lijsten`';
@@ -14,7 +14,7 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }
 
-     //lijsten met taken kunnen connecteren (zodat je lijsten apart kunt bekijken)
+     // lijsten met taken kunnen connecteren (zodat je lijsten apart kunt bekijken)
      public function selectById($id)
      {
          $sql = 'SELECT * FROM `lijsten` WHERE `id`= :id';
@@ -25,7 +25,7 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->fetch(PDO::FETCH_ASSOC);
      }
 
-     //delete lijsten
+     // delete lijsten
      public function delete($id)
      {
          $sql = 'DELETE FROM `lijsten` WHERE `id` = :id';
@@ -35,7 +35,7 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->execute();
      }
 
-     //lijst toevoegen --> id gebruiken om laatste id te weten
+     // lijst toevoegen --> id gebruiken om laatste id te weten
      public function insert($data)
      {
          $errors = $this->validate($data);
@@ -51,7 +51,7 @@ require_once __DIR__.'/Db.class.php';
          return false;
      }
 
-     //checken of alle velden ingevuld zijn
+     // checken of alle velden ingevuld zijn
      public function validate($data)
      {
          $errors = [];
