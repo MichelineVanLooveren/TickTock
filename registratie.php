@@ -56,9 +56,11 @@
         <label for="paswoord">Paswoord</label>
         <input type="password" name="paswoord" id="paswoord">
 
-        <input type="submit" value="registreer">
+        <input type="submit" value="Maak je TickTock-account aan">
       </form>
-      <a href="index.php">login met je acount</a>
+      <div>
+        <p>Al een account? <a href="index.php">Log hier in</a></p>
+      </div>
     </section>
   </body>
 </html>
