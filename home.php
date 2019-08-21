@@ -2,10 +2,9 @@
     session_start();
     $title = 'Home'; // titel van de pagina
     $currentPage = 'home'; // gebruikt in check sessie
-
      // checken of gebruiker sessie heeft --> indien geen sessie redirecten naar login
     if (!isset($_SESSION['User']) && $currentPage != 'login') {
-        header('location:index.php');
+        header('location:login.php');
         exit();
     }
     require_once __DIR__.'/classes/Lijst.class.php';
@@ -21,7 +20,7 @@
         }
     }
 
-    $lijsten = $lijst->selectAll();
+    $lijsten = $lijst->selectAllFromUser($_SESSION["User"]["userId"]);
 
     include 'includes/header.inc.php';
 ?>
@@ -35,7 +34,7 @@
             <?php foreach ($lijsten as $lijst):?> 
                 <li>
                   <a href="lijst.php?id=<?php echo $lijst['id']; ?>"><?php echo $lijst['title']; ?></a>
-                  <a class="confirmation" href="index.php?id=<?php echo $lijst['id']; ?>&amp;action=delete_lijst">X</a>
+                  <a class="confirmation" href="home.php?id=<?php echo $lijst['id']; ?>&amp;action=delete_lijst">X</a>
                 </li>
             <?php endforeach; ?>
         </ul>

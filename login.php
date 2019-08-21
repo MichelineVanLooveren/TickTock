@@ -18,8 +18,9 @@
                 if (!empty($user)) {
                     if (password_verify($_POST['paswoord'], $user['paswoord'])) {
                         $data = array(
+                'userId' => $user["id"],
                 'title' => $_POST['username'],
-                'isAdmin' => $user['isAdmin'],
+                'isAdmin' => $user['isAdmin']
               );
                         $_SESSION['User'] = $data;
                         if ($_SESSION['User']['isAdmin'] == 0) {
