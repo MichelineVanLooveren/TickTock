@@ -8,5 +8,3 @@ https://trello.com/b/kCiSngJE/php-ticktock
 
 # GitHub-URL
 
-# Wachtwoorden admin
-
