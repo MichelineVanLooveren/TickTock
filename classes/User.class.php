@@ -24,7 +24,7 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->fetch(PDO::FETCH_ASSOC);
      }
 
-     //nieuwe user aanmaken
+     // nieuwe user aanmaken
      public function insertUser($data)
      {
          $errors = $this->validate($data);
@@ -44,7 +44,7 @@ require_once __DIR__.'/Db.class.php';
          return false;
      }
 
-     //foutboodschappen bij aanmaak user
+     // foutboodschappen bij aanmaak user
      public function validate($data)
      {
          $errors = [];
