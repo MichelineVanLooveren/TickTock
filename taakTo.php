@@ -1,5 +1,14 @@
 <?php
-    $title = 'Taak toevoegen ';
+    session_start();
+    $title = 'Taak toevoegen '; // titel van de pagina
+    $currentPage = 'taakToevoegen'; // gebruikt in check sessie
+
+    // checken of gebruiker sessie heeft --> indien geen sessie redirecten naar login
+    if (!isset($_SESSION['User']) && $currentPage != 'login') {
+        header('location:index.php');
+        exit();
+    }
+
     require_once __DIR__.'/classes/Taak.class.php';
     $taak = new Taak();
 
@@ -34,24 +43,32 @@
 ?>
 
 <section>
-    <h2>Taak toevoegen</h2>
-    <form action="taakTo.php?id=<?php echo $_GET['id']; ?>" method="post"> <!-- id van lijst meegeven zodat in kolom lijstId opgeslagen kan worden in tabel taken --> 
-        <?php
-            if (!empty($errors['titel'])) {
-                echo '<span class="error">'.$errors['titel'].'</span>';
-            }
-        ?>
-         <?php
-            if (!empty($errors['werkuren'])) {
-                echo '<span class="error">'.$errors['werkuren'].'</span>';
-            }
-        ?>
-        <input type="hidden" name="action" value="insertTaak">
-        <input type="text" name="titel" require>
-        <input type="number" name="werkuren" min="1" max=24 require>
-        <input type="date" name="datum">
-        <input type="submit" value="Taak toevoegen">
-    </form>
+    <div class="taak__container">
+    <h2 class="taak__title">Taak toevoegen</h2>
+        <form action="taakTo.php?id=<?php echo $_GET['id']; ?>" method="post" class="taak__form"> <!-- id van lijst meegeven zodat in kolom lijstId opgeslagen kan worden in tabel taken --> 
+            <?php
+                if (!empty($errors['titel'])) {
+                    echo '<span class="error">'.$errors['titel'].'</span>';
+                }
+            ?>
+            <?php
+                if (!empty($errors['werkuren'])) {
+                    echo '<span class="error">'.$errors['werkuren'].'</span>';
+                }
+            ?>
+            <input type="hidden" name="action" value="insertTaak">
+            <div class="form__field">
+            <input type="text" name="titel" placeholder="Titel taak" require class="inputField">
+            </div>
+            <div class="form__field">
+            <input type="number" name="werkuren" min="1" max=24 require>
+            </div>
+            <div class="form__field">
+            <input type="date" name="datum">
+            </div>
+            <input type="submit" value="Taak toevoegen" class="btn btn--primary">
+        </form>
+    </div>
 </section>
 
 <?php include 'includes/footer.inc.php'; ?>

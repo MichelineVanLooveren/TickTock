@@ -18,9 +18,9 @@
                 if (!empty($user)) {
                     if (password_verify($_POST['paswoord'], $user['paswoord'])) {
                         $data = array(
-                'userId' => $user["id"],
+                'userId' => $user['id'],
                 'title' => $_POST['username'],
-                'isAdmin' => $user['isAdmin']
+                'isAdmin' => $user['isAdmin'],
               );
                         $_SESSION['User'] = $data;
                         if ($_SESSION['User']['isAdmin'] == 0) {
@@ -50,28 +50,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/login.css">
   <title><?php echo $title; ?></title> <!-- titel per pagina laten veranderen -->
 </head>
   <body>  
     <section>
-      <h1>Login</h1>
-      <?php if (!empty($error)): ?> 
-        <div class="error"><?php echo $error; ?></div>
-      <?php endif; ?>
-      <form action="" method="post">
-        <input type="hidden" name="action" value="login">
+      <div class="login__container">
+        <header class="login"></header>
+        <main class="login">
+          <h1 class="form__title">Login TickTock</h1>
+          <?php if (!empty($error)): ?> 
+            <div class="form_error"><?php echo $error; ?></div>
+          <?php endif; ?>
+          <form action="" method="post" class="login__form">
+            <input type="hidden" name="action" value="login">
+
+            <div class="form__field">
+              <label for="username">E-mailadres</label>
+              <input type="text" name="username" id="username" placeholder="Typ je e-mailadres" class="inputField">
+            </div>
+
+            <div class="form__field">
+              <label for="paswoord">Wachtwoord</label>
+              <input type="password" name="paswoord" id="paswoord" placeholder="Typ je wachtwoord" class="inputField">
+            </div>
+
+            <input type="submit" value="Meld me aan" class="btn btn--primary">
+          </form>
         
-        <label for="username">Email</label>
-        <input type="text" name="username" id="username">
-
-        <label for="paswoord">Paswoord</label>
-        <input type="password" name="paswoord" id="paswoord">
-
-        <input type="submit" value="Meld me aan">
-      </form>
-      <div>
-        <p>Nog geen account? <a href="registratie.php">Registreer hier</a></p>
+        <div>
+          <p id="newAccount">Nog geen account? <a href="registratie.php">Registreer hier</a></p>
+        </div>
+        </main>
       </div>
     </section>
   </body>

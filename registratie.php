@@ -22,7 +22,7 @@
             if (!$insertUser) {
                 $errors = $admin->validate($data);
             } else {
-                header('Location: index.php');
+                header('Location: home.php');
                 exit();
             }
         }
@@ -35,32 +35,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/login.css">
   <title><?php echo $title; ?></title> <!-- titel per pagina laten veranderen -->
 </head>
   <body>  
     <section>
-      <h1>Registratie</h1>
-      <form action="registratie.php" method="post">
+    <div class="login__container">
+    <header class="login"></header>
+    <main class="login">
+      <h1 class="form__title">Registratie TickTock</h1>
+      <form action="" method="post" class="login__form">
         <input type="hidden" name="action" value="insertUser">
 
-        <label for="voornaam">Voornaam</label>
-        <input type="text" name="voornaam" id="voornaam">
+        <div class="form__field">
+          <label for="voornaam">Voornaam</label>
+          <input type="text" name="voornaam" id="voornaam" placeholder="Typ je voornaam" class="inputField">
+        </div>
 
-        <label for="achternaam">Achternaam</label>
-        <input type="text" name="achternaam" id="achternaam">
+        <div class="form__field">
+          <label for="achternaam">Achternaam</label>
+          <input type="text" name="achternaam" id="achternaam" placeholder="Typ je achternaam" class="inputField">
+        </div>
+        
+        <div class="form__field">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" placeholder="Typ je e-mailadres" class="inputField">
+        </div>
 
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email">
+        <div class="form__field">
+          <label for="paswoord">Wachtwoord</label>
+          <input type="password" name="paswoord" id="paswoord" placeholder="Kies een wachtwoord" class="inputField">
+        </div>
 
-        <label for="paswoord">Paswoord</label>
-        <input type="password" name="paswoord" id="paswoord">
-
-        <input type="submit" value="Maak je TickTock-account aan">
+        <input type="submit" value="Maak je TickTock-account aan" class="btn btn--primary">
       </form>
       <div>
-        <p>Al een account? <a href="index.php">Log hier in</a></p>
+        <p id="alreadyAccount">Al een account? <a href="index.php">Log hier in</a></p>
       </div>
+    </main>
+    </div>
     </section>
   </body>
 </html>

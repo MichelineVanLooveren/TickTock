@@ -1,5 +1,14 @@
 <?php
-    $title = 'Admin';
+    session_start();
+    $title = 'Admin'; // titel van de pagina
+    $currentPage = 'admin'; // gebruikt in check sessie
+
+     // checken of gebruiker sessie heeft --> indien geen sessie redirecten naar login
+    if (!isset($_SESSION['User']) && $currentPage != 'login') {
+        header('location:index.php');
+        exit();
+    }
+
     include 'includes/header.inc.php';
 
     require_once __DIR__.'/classes/Admin.class.php';
@@ -13,7 +22,7 @@
                 'user_voornaam' => $_POST['user_voornaam'],
                 'user_achternaam' => $_POST['user_achternaam'],
                 'email' => $_POST['email'],
-                'passwoord' => password_hash($_POST['passwoord'], PASSWORD_DEFAULT), //paswoord hashen
+                'paswoord' => password_hash($_POST['paswoord'], PASSWORD_DEFAULT), //paswoord hashen
                 'isAdmin' => '1', //isAdmin-boolean
             );
             // poging tot insert, indien niet gelukt de fouten ophalen uit de DAO class
@@ -42,36 +51,47 @@
 
 ?>
 
-<section>
-<h2>Admin pagina</h2>
-<article>
-    <h3>Data app</h3>
-    <p>Lijsten totaal:  <?php echo $lijsten['lijsten']; ?></p>
-    <p>User totaal:  <?php echo $totaal['userTotaal']; ?></p>
-    <p>users totaal:  <?php echo $users['users']; ?></p>
-    <p>admins totaal:  <?php echo $admins['admins']; ?></p>
+<section >
+    <div class="admin__container">
+        <h2 class="admin__title">Admin pagina</h2>
+        <article>
+            <h3 class="admin__title">Data app</h3>
+            <p>Totaal aantal lijsten:  <?php echo $lijsten['lijsten']; ?></p>
+            <p>Totaal aantal gebruikers:  <?php echo $totaal['userTotaal']; ?></p>
+            <p>Totaal aantal studenten:  <?php echo $users['users']; ?></p>
+            <p>Totaal aantal admins:  <?php echo $admins['admins']; ?></p>
 
-    <div>
-        <h4>admin info</h4> <!-- overzicht van alle admins -->
-        <ul>
-            <?php foreach ($infoadmins as $info): ?>
-                <li><?php echo $info['user_voornaam'].' '.$info['user_achternaam']; ?> <a class="confirmation" href="admin.php?id=<?php echo $info['id']; ?>&amp;action=delete_admin">X</a></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
+            <div>
+                <h3 class="admin__title">Overzicht admins:</h3> <!-- overzicht van alle admins -->
+                <ul>
+                    <?php foreach ($infoadmins as $info): ?>
+                        <li><?php echo $info['user_voornaam'].' '.$info['user_achternaam']; ?> <a class="confirmation" href="admin.php?id=<?php echo $info['id']; ?>&amp;action=delete_admin"><img src="assets/delete.png" class="deleteImg" alt="delete"></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
 
-</article>
-<article>
-    <h3>Admin toevoegen</h3>
-    <form action="admin.php" method="post">
-        <input type="hidden" name="action"  value="insertadmin">
-        <input type="text" name="user_voornaam" require placeholder="Voornaam">
-        <input type="text" name="user_achternaam" require placeholder="Achternaam">
-        <input type="email" name="email" require placeholder="E-mail">
-        <input type="password" name="passwoord" require placeholder="Paswoord">
-        <input type="submit" value="Nieuwe admin toevoegen">
-    </form>
-</article>
+        </article>
+        <article>
+            <div class="admin__container"></div>
+            <h3 class="admin__title">Admin toevoegen</h3>
+            <form action="" method="post" class="admin__form">
+                <input type="hidden" name="action"  value="insertadmin">
+                <div class="form__field">
+                <input type="text" name="user_voornaam" require placeholder="Voornaam" class="inputField">
+                </div>
+                <div class="form__field">
+                <input type="text" name="user_achternaam" require placeholder="Achternaam" class="inputField">
+                </div>
+                <div class="form__field">
+                <input type="email" name="email" require placeholder="E-mail" class="inputField">
+                </div>
+                <div class="form__field">
+                <input type="password" name="paswoord" require placeholder="Paswoord" class="inputField">
+                </div>
+                <input type="submit" value="Nieuwe admin toevoegen" class="btn btn--primary">
+            </form>
+        </article>
+</div>
 </section>
 
 <!-- script checkt array en gaat zoeken naar elementen met klasse confirmation en dan gaat na klik vragen of je zeker bent--> 
