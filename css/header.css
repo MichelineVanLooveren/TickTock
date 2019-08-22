@@ -1,0 +1,32 @@
+.header {
+    background: #F6BBA9;
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem 0;
+    align-items: center;
+  }
+  
+  .header__logo {
+    width: 80%;
+  }
+  
+  .header__menu {
+    display: flex;
+    width: 40rem;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .menu__item__link {
+    text-decoration: none;
+    font-size: 3.2rem;
+    font-weight: bold;
+  }
+
+  .menu__item__link.logout{
+    font-size: 1.5rem;
+  }
+    
+  .menu__item__link:hover {
+    color: #3D655B;
+  }
