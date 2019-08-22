@@ -37,12 +37,22 @@ require_once __DIR__.'/Db.class.php';
          return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }
 
-     // delete lijsten
+     // delete taken die verbonden zijn aan een lijst die verwijderd wordt
      public function delete($lijstId)
      {
          $sql = 'DELETE FROM `taken` WHERE `lijstId` = :lijstId';
          $stmt = $this->pdo->prepare($sql);
          $stmt->bindValue(':lijstId', $lijstId);
+
+         return $stmt->execute();
+     }
+
+     // delete taken
+     public function deleteTaak($id)
+     {
+         $sql = 'DELETE FROM `taken` WHERE `id` = :id';
+         $stmt = $this->pdo->prepare($sql);
+         $stmt->bindValue(':id', $id);
 
          return $stmt->execute();
      }

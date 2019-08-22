@@ -5,9 +5,9 @@ class DAO
 { //data access object
     // Properties
     private static $dbHost = 'localhost';
-    private static $dbName = 'todo';
-    private static $dbUser = 'todo';
-    private static $dbPass = 'test';
+    private static $dbName = 'bureau1q_todo';
+    private static $dbUser = 'bureau1q_MVL';
+    private static $dbPass = 'tG6gW;hTrb55';
     private static $sharedPDO; //slaagt connectie hieronder op
     protected $pdo;
 
